@@ -27,11 +27,17 @@ class Cell
     end
   end
 
-  def render
+  def render(option = false)
     if @fired_at == true && @ship == nil
       "M"
-      else
-        "."
+    elsif empty? == false && fired_upon? == false && option == true
+      "S"
+    elsif fired_upon? == true && ship.sunk? == true
+      "X"
+    elsif fired_upon? == true && @ship.health != @ship.length
+      "H"
+    else
+      "."
     end
   end
 end
