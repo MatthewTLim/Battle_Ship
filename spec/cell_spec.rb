@@ -4,6 +4,7 @@ require './lib/cell'
 RSpec.describe Cell do
   before do
     @cell = Cell.new("B4")
+    @cruiser = Ship.new("Cruiser", 3)
   end
 
   describe "#exists" do
