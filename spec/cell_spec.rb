@@ -65,12 +65,29 @@ RSpec.describe Cell do
       expect(@cell_1.render).to eq("M")
     end
 
-    it "renders H if the cell has been fired upon and it contains a ship (the shot was a hit)." do
+    it "renders S if the cell has not been fired upon and contains a ship" do
+      @cell_2.place_ship(@cruiser)
 
+      expect(@cell_2.render).to eq(".")
+      expect(@cell_2.render(true)).to eq("S")
     end
 
-    xit "renders “X” if the cell has been fired upon and its ship has been sunk. " do
+    it "renders H if the cell has been fired upon and it contains a ship (the shot was a hit)." do
+      @cell_2.place_ship(@cruiser)
 
+      @cell_2.fire_upon
+
+      expect(@cell_2.render).to eq("H")
+    end
+
+    it "renders “X” if the cell has been fired upon and its ship has been sunk. " do
+      @cell_2.place_ship(@cruiser)
+
+      @cell_2.fire_upon
+      @cell_2.fire_upon
+      @cell_2.fire_upon
+
+      expect(@cell_2.render).to eq("X")
     end
   end
 end
