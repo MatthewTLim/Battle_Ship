@@ -17,8 +17,7 @@ class Cell
     end
 
     def fired_upon?
-        @fired_at == true
-        # @ship.health == @ship.length 
+        !(@ship.nil? || @ship.health == @ship.length) || @fired_at != false
     end
 
     def fire_upon
@@ -35,6 +34,8 @@ class Cell
             "M"
         elsif empty? == false && fired_upon? == false && option == true
             "S"
+        elsif fired_upon? == true && @ship.sunk? == true
+            "X"
         elsif fired_upon? == true && empty? == false
             "H"
         else

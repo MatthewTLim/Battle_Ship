@@ -79,7 +79,13 @@ RSpec.describe Cell do
         end
 
         it 'can render "X” if the cell has been fired upon and its ship has been sunk' do
+            @cell_2.place_ship(@cruiser)
+            @cruiser.hit
+            @cruiser.hit
+            @cruiser.hit
 
+            expect(@cruiser.sunk?).to eq(true)
+            expect(@cell_2.render).to eq("X")
         end
     end
 end
