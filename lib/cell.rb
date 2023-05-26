@@ -30,5 +30,15 @@ class Cell
         end
     end
 
-    
+    def render(option = false)
+        if fired_upon? == true && empty? == true
+            "M"
+        elsif empty? == false && fired_upon? == false && option == true
+            "S"
+        elsif fired_upon? == true && empty? == false
+            "H"
+        else
+            "."
+        end
+    end
 end
