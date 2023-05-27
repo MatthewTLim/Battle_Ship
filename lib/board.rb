@@ -22,4 +22,14 @@ class Board
       "D4" => Cell.new("D4")
     }
   end
+
+  def valid_coordinate(coordinate)
+   searched_cell = false
+   @cells.each do |cell|
+    if cell[0] == coordinate
+      searched_cell = true
+    end
+   end
+   searched_cell
+  end
 end
