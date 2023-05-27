@@ -48,33 +48,33 @@ RSpec.describe Board do
       expect(@board.valid_placement?(@cruiser, ["A1", "B2", "C3"])).to eq(false)
       expect(@board.valid_placement?(@submarine, ["C2", "D3"])).to eq(false)
     end
-  end
 
-  describe "#coordinate_formatter" do
-    it "can return an array of coordicate numbers" do
-      coordinates = ["A1", "A2", "A3"]
-      expect(@board.coordinate_formatter(coordinates)).to eq([1, 2, 3])
+    describe "#coordinate_formatter" do
+      it "can return an array of coordicate numbers" do
+        coordinates = ["A1", "A2", "A3"]
+        expect(@board.coordinate_formatter(coordinates)).to eq([1, 2, 3])
+      end
     end
-  end
 
-  describe "#consecutive_check" do
-    it "can tell if the coordinates are consecutive" do
-      coordinates = ["A1", "A2", "A3"]
-      expect(@board.consecutive_check(coordinates)).to eq(true)
+    describe "#consecutive_check" do
+      it "can tell if the coordinates are consecutive" do
+        coordinates = ["A1", "A2", "A3"]
+        expect(@board.consecutive_check(coordinates)).to eq(true)
+      end
     end
-  end
 
-  describe "#diagonal_check" do
-    it "can tell if the cooridnates are diagonal from one another" do
-      valid_coordinate = ["A1", "B2", "C3"]
-      expect(@board.diagonal_check(valid_coordinate)).to eq(true)
-   end
-  end
+    describe "#diagonal_check" do
+      it "can tell if the cooridnates are diagonal from one another" do
+        valid_coordinate = ["A1", "B2", "C3"]
+        expect(@board.diagonal_check(valid_coordinate)).to eq(true)
+    end
+    end
 
-  describe "#alpha_extractor" do
-    it "can return an array of coordinate characters" do
-      valid_characters = ["A1", "B1", "C1"]
-      expect(@board.alpha_extractor(valid_characters)).to eq([65, 66, 67])
+    describe "#ordinal_extractor" do
+      it "can return an array of coordinate characters" do
+        valid_characters = ["A1", "B1", "C1"]
+        expect(@board.ordinal_extractor(valid_characters)).to eq([65, 66, 67])
+      end
     end
   end
 end
