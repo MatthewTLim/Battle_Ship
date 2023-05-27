@@ -7,6 +7,9 @@ RSpec.describe Board do
     @board = Board.new
     @cruiser = Ship.new("Cruiser", 3)
     @submarine = Ship.new("Submarine", 2)
+    @cell_1 = @board.cells["A1"]
+    @cell_2 = @board.cells["A2"]
+    @cell_3 = @board.cells["A3"]
   end
 
   describe "#exists" do
@@ -75,6 +78,17 @@ RSpec.describe Board do
         valid_characters = ["A1", "B1", "C1"]
         expect(@board.ordinal_extractor(valid_characters)).to eq([65, 66, 67])
       end
+    end
+  end
+
+  describe "#place" do
+    it "can place a ship in its cells" do
+      @board.place(@cruiser, ["A1", "A2", "A3"])
+
+      expect(@cell_1).to eq(@cruiser)
+      expect(@cell_2).to eq(@cruiser)
+      expect(@cell_3).to eq(@cruiser)
+      expect(@cell_3.ship == @cell_2.ship).to eq(true)
     end
   end
 end
