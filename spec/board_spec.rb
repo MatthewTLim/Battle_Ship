@@ -32,9 +32,30 @@ RSpec.describe Board do
   end
 
   describe "#valid_placement?" do
-    it "can check if the ship is being placed on to board properly" do
+    it "can check if coordinates in the array are the same as the length of the ship" do
       expect(@board.valid_placement?(@cruiser, ["A1", "A2"])).to eq(false)
       expect(@board.valid_placement?(@submarine, ["A1", "A3", "A4"])).to eq(false)
+      # Add fringe tests here later
+    end
+
+    it "can make sure the coordinates are consecutive" do
+      expect(@board.valid_placement?(@cruiser, ["A1", "A2", "A4"])).to eq(false)
+      expect(@board.valid_placement?(@submarine, ["A1", "C1"])).to eq(false)
+      # Add fringe tests here later
+    end
+  end
+
+  describe "#coordinate_formatter" do
+    it "can return an array of coordicate numbers" do
+      coordinates = ["A1", "A2", "A3"]
+      expect(@board.coordinate_formatter(coordinates)).to eq([1, 2, 3])
+    end
+  end
+
+  describe "#consecutive_check" do
+    it "can tell if the coordinates are consecutive" do
+      coordinates = ["A1", "A2", "A3"]
+      expect(@board.consecutive_check(coordinates)).to eq(true)
     end
   end
 end
