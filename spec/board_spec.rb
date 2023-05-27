@@ -58,4 +58,18 @@ RSpec.describe Board do
       expect(@board.consecutive_check(coordinates)).to eq(true)
     end
   end
+
+  describe "#diagonal_check" do
+    it "can tell if the cooridnates are diagonal from one another" do
+      valid_coordinate = ["A1", "B2", "C3"]
+      expect(@board.diagonal_check(valid_coordinate)).to eq(true)
+   end
+  end
+
+  describe "#alpha_extractor" do
+    it "can return an array of coordinate characters" do
+      valid_characters = ["A1", "B1", "C1"]
+      expect(@board.alpha_extractor(valid_characters)).to eq([65, 66, 67])
+    end
+  end
 end
