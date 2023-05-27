@@ -32,4 +32,9 @@ class Board
    end
    searched_cell
   end
+
+  def valid_placement?(ship, coordinates)
+    ship.length == coordinates.count
+    # require 'pry'; binding.pry
+  end
 end
