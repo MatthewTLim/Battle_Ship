@@ -43,6 +43,11 @@ RSpec.describe Board do
       expect(@board.valid_placement?(@submarine, ["A1", "C1"])).to eq(false)
       # Add fringe tests here later
     end
+
+    it "can make sure a ship will not be placed diagonally" do
+      expect(@board.valid_placement?(@cruiser, ["A1", "B2", "C3"])).to eq(false)
+      expect(@board.valid_placement?(@submarine, ["C2", "D3"])).to eq(false)
+    end
   end
 
   describe "#coordinate_formatter" do
