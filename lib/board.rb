@@ -34,7 +34,6 @@ class Board
   end
 
   def valid_placement?(ship, coordinates)
-    # require 'pry'; binding.pry
     ship.length == coordinates.count && consecutive_check(coordinates) == true
   end
 
@@ -44,8 +43,18 @@ class Board
     formatted_coord
   end
 
+  def alpha_extractor(coordinates)
+    characters = coordinates.map { |coordinate| coordinate.delete('^A-Z') }
+    characters.map { |character| character.ord}
+  end
+
   def consecutive_check(coordinates)
     coordinate_formatter(coordinates).each_cons(coordinates.count - 1).all? { |first_coord, second_coord| second_coord == first_coord + 1}
-    # require 'pry'; binding.pry
+  end
+
+  def diagonal_check(coordinates)
+    a = coordinate_formatter(coordinates).each_cons(coordinates.count - 1).all? { |first_coord, second_coord| second_coord == first_coord + 1}
+    b = alpha_extractor(coordinates).each_cons(coordinates.count - 1).all? { |first_coord, second_coord| second_coord == first_coord + 1}
+    a && b == true
   end
 end
