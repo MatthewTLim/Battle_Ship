@@ -49,12 +49,18 @@ class Board
   end
 
   def consecutive_check(coordinates)
+    coordinate_integer_comparison(coordinates) == true
+  end
+
+  def coordinate_integer_comparison(coordinates)
     coordinate_formatter(coordinates).each_cons(coordinates.count - 1).all? { |first_coord, second_coord| second_coord == first_coord + 1}
   end
 
+  def coordinate_ordinal_comparison(coordinates)
+    alpha_extractor(coordinates).each_cons(coordinates.count - 1).all? { |first_coord, second_coord| second_coord == first_coord + 1}
+  end
+
   def diagonal_check(coordinates)
-    a = coordinate_formatter(coordinates).each_cons(coordinates.count - 1).all? { |first_coord, second_coord| second_coord == first_coord + 1}
-    b = alpha_extractor(coordinates).each_cons(coordinates.count - 1).all? { |first_coord, second_coord| second_coord == first_coord + 1}
-    a && b == true
+    coordinate_integer_comparison(coordinates) == true && coordinate_ordinal_comparison(coordinates) == true
   end
 end
