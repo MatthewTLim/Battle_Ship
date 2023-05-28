@@ -91,14 +91,14 @@ class Board
          a << letter + " " + group.shift
       end
     end
-  
+
     line_1 = "  1 2 3 4 \n"
     result = line_1 + a.join(" \n") + " \n"
   end
 
   def render_assistant(option = false)
     formatted = []
-    
+
     @cells.each_slice(4) do |group|
       unformatted = []
       group.each do |_, cell|
