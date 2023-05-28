@@ -82,32 +82,30 @@ class Board
     end
   end
 
-  def render
+  def render(option = false)
     a = []
     range = "A".."D"
 
-    render_assistant.each_slice(4) do |group|
+    render_assistant(option).each_slice(4) do |group|
       range.each do |letter|
          a << letter + " " + group.shift
-        end
-        # require 'pry'; binding.pry
       end
-
-      line_1 = "  1 2 3 4 "
-      result = line_1 + a.join(" ")
-  end
-
-def render_assistant
-  formatted = []
-  @cells.each_slice(4) do |group|
-    unformatted = []
-    group.each do |_, cell|
-
-      unformatted << cell.render
-      # require 'pry'; binding.pry
     end
-    formatted << unformatted.join(" ")
+  
+    line_1 = "  1 2 3 4 \n"
+    result = line_1 + a.join(" \n") + " \n"
   end
-  formatted
-end
+
+  def render_assistant(option = false)
+    formatted = []
+    
+    @cells.each_slice(4) do |group|
+      unformatted = []
+      group.each do |_, cell|
+        unformatted << cell.render(option)
+      end
+      formatted << unformatted.join(" ")
+    end
+    formatted
+  end
 end
