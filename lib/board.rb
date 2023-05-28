@@ -84,23 +84,30 @@ class Board
 
   def render
     a = []
+    range = "A".."D"
+
     render_assistant.each_slice(4) do |group|
-      range = "A ".."D "
       range.each do |letter|
-         a << letter + group.join(" ")
+         a << letter + " " + group.shift
         end
         # require 'pry'; binding.pry
       end
+
       line_1 = "  1 2 3 4 "
       result = line_1 + a.join(" ")
   end
 
 def render_assistant
-  board = ""
-    board = @cells.map do |cell|
-      board + cell[1].render
-      require 'pry'; binding.pry
-    end
-  end
+  formatted = []
+  @cells.each_slice(4) do |group|
+    unformatted = []
+    group.each do |_, cell|
 
+      unformatted << cell.render
+      # require 'pry'; binding.pry
+    end
+    formatted << unformatted.join(" ")
+  end
+  formatted
+end
 end
