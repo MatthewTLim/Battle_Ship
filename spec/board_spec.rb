@@ -52,6 +52,10 @@ RSpec.describe Board do
       expect(@board.valid_placement?(@submarine, ["C2", "D3"])).to eq(false)
     end
 
+    it "will not place a ship if the cell already contains a ship" do
+      expect(@board.valid_placement?(@submarine, ["A1", "B1"])).to eq(false)
+    end
+
     describe "#coordinate_formatter" do
       it "can return an array of coordicate numbers" do
         coordinates = ["A1", "A2", "A3"]
@@ -79,6 +83,18 @@ RSpec.describe Board do
         expect(@board.ordinal_extractor(valid_characters)).to eq([65, 66, 67])
       end
     end
+
+    describe "#overlap_check" do
+      it "can check if a cell contains a ship" do
+        overlapped_coordinates = ["A1", "A2", "A3"]
+        test_coordinates = ["A1", "A2", "A4"]
+
+        @board.place(@cruiser, ["A1", "A2", "A3"])
+
+        expect(@board.overlap_check(overlapped_coordinates)).to eq(true)
+        expect(@board.overlap_check(test_coordinates)).to eq(true)
+      end
+    end
   end
 
   describe "#place" do
@@ -91,4 +107,6 @@ RSpec.describe Board do
       expect(@cell_3.ship == @cell_2.ship).to eq(true)
     end
   end
+
+
 end
