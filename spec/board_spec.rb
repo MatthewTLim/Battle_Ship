@@ -117,9 +117,14 @@ RSpec.describe Board do
   end
 
   describe "#render_assistant" do
-    it "can help render" do
-      expect(@board.render_assistant).to eq([".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "."])
+    it "can add renderable spaces to board i.e.(., M, S, H, X)" do
+      expect(@board.render_assistant).to eq([". . . .", ". . . .", ". . . .", ". . . ."])
     end
   end
 
+  describe "#letter_adder" do
+    xit "can add letters to the board" do
+      expect(@board.letter_adder).to eq(["A. . . . . . . . . . . . . . . .", "B. . . . . . . . . . . . . . . .", "C. . . . . . . . . . . . . . . .", "D. . . . . . . . . . . . . . . ."])
+    end
+  end
 end
