@@ -63,4 +63,12 @@ class Board
   def diagonal_check(coordinates)
     coordinate_integer_comparison(coordinates) == true && coordinate_ordinal_comparison(coordinates) == true
   end
+
+  def place(ship, coordinates)
+    coordinates.each do |coordinate|
+      if @cells.key?(coordinate)
+        @cells[coordinate].place_ship(ship)
+      end
+    end
+  end
 end
