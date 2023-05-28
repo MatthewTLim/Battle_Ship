@@ -108,5 +108,18 @@ RSpec.describe Board do
     end
   end
 
+  describe "#render" do
+    it "can render a String representation of itself to display to the user all of its cells in a formatted grid" do
+      @board.place(@cruiser, ["A1", "A2", "A3"])
+
+      expect(@board.render).to eq("  1 2 3 4 \nA . . . . \nB . . . . \nC . . . . \nD . . . . \n")
+    end
+  end
+
+  describe "#render_assistant" do
+    it "can help render" do
+      expect(@board.render_assistant).to eq([".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "."])
+    end
+  end
 
 end
