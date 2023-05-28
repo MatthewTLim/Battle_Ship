@@ -43,7 +43,7 @@ class Board
     formatted_coord
   end
 
-  def alpha_extractor(coordinates)
+  def ordinal_extractor(coordinates)
     characters = coordinates.map { |coordinate| coordinate.delete('^A-Z') }
     characters.map { |character| character.ord}
   end
@@ -57,10 +57,18 @@ class Board
   end
 
   def coordinate_ordinal_comparison(coordinates)
-    alpha_extractor(coordinates).each_cons(coordinates.count - 1).all? { |first_coord, second_coord| second_coord == first_coord + 1}
+    ordinal_extractor(coordinates).each_cons(coordinates.count - 1).all? { |first_coord, second_coord| second_coord == first_coord + 1}
   end
 
   def diagonal_check(coordinates)
     coordinate_integer_comparison(coordinates) == true && coordinate_ordinal_comparison(coordinates) == true
+  end
+
+  def place(ship, coordinates)
+    coordinates.each do |coordinate|
+      if @cells.key?(coordinate)
+        @cells[coordinate].place_ship(ship)
+      end
+    end
   end
 end
