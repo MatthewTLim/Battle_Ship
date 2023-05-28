@@ -85,9 +85,9 @@ RSpec.describe Board do
     it "can place a ship in its cells" do
       @board.place(@cruiser, ["A1", "A2", "A3"])
 
-      expect(@cell_1).to eq(@cruiser)
-      expect(@cell_2).to eq(@cruiser)
-      expect(@cell_3).to eq(@cruiser)
+      expect(@cell_1.ship).to eq(@cruiser)
+      expect(@cell_2.ship).to eq(@cruiser)
+      expect(@cell_3.ship).to eq(@cruiser)
       expect(@cell_3.ship == @cell_2.ship).to eq(true)
     end
   end
