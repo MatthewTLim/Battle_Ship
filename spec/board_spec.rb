@@ -52,6 +52,10 @@ RSpec.describe Board do
       expect(@board.valid_placement?(@submarine, ["C2", "D3"])).to eq(false)
     end
 
+    it "will not place a ship if the cell already contains a ship" do
+      expect(@board.valid_placement?(@submarine, ["A1", "B1"])).to eq(false)
+    end
+
     describe "#coordinate_formatter" do
       it "can return an array of coordicate numbers" do
         coordinates = ["A1", "A2", "A3"]
@@ -79,6 +83,18 @@ RSpec.describe Board do
         expect(@board.ordinal_extractor(valid_characters)).to eq([65, 66, 67])
       end
     end
+
+    describe "#overlap_check" do
+      it "can check if a cell contains a ship" do
+        overlapped_coordinates = ["A1", "A2", "A3"]
+        test_coordinates = ["A1", "A2", "A4"]
+
+        @board.place(@cruiser, ["A1", "A2", "A3"])
+
+        expect(@board.overlap_check(overlapped_coordinates)).to eq(true)
+        expect(@board.overlap_check(test_coordinates)).to eq(true)
+      end
+    end
   end
 
   describe "#place" do
@@ -89,6 +105,25 @@ RSpec.describe Board do
       expect(@cell_2.ship).to eq(@cruiser)
       expect(@cell_3.ship).to eq(@cruiser)
       expect(@cell_3.ship == @cell_2.ship).to eq(true)
+    end
+  end
+
+  describe "#render" do
+    it "can render a String representation of itself to display to the user all of its cells in a formatted grid" do
+
+      expect(@board.render).to eq("  1 2 3 4 \nA . . . . \nB . . . . \nC . . . . \nD . . . . \n")
+    end
+
+    it "can render ships on the board when option is true" do
+      @board.place(@cruiser, ["A1", "A2", "A3"])
+
+      expect(@board.render(true)).to eq("  1 2 3 4 \nA S S S . \nB . . . . \nC . . . . \nD . . . . \n")
+    end
+  end
+
+  describe "#render_assistant" do
+    it "can add renderable spaces to board i.e.(., M, S, H, X)" do
+      expect(@board.render_assistant).to eq([". . . .", ". . . .", ". . . .", ". . . ."])
     end
   end
 end

@@ -34,7 +34,7 @@ class Board
   end
 
   def valid_placement?(ship, coordinates)
-    ship.length == coordinates.count && consecutive_check(coordinates) == true && diagonal_check(coordinates) == false
+    ship.length == coordinates.count && consecutive_check(coordinates) == true && diagonal_check(coordinates) == false && overlap_check(coordinates) == false
   end
 
   def coordinate_formatter(coordinates)
@@ -64,11 +64,48 @@ class Board
     coordinate_integer_comparison(coordinates) == true && coordinate_ordinal_comparison(coordinates) == true
   end
 
+  def overlap_check(coordinates)
+    overlap = false
+    coordinates.each do |coordinate|
+      @cells[coordinate].empty? == false
+      overlap = true
+      # break
+    end
+    overlap
+  end
+
   def place(ship, coordinates)
     coordinates.each do |coordinate|
       if @cells.key?(coordinate)
         @cells[coordinate].place_ship(ship)
       end
     end
+  end
+
+  def render(option = false)
+    a = []
+    range = "A".."D"
+
+    render_assistant(option).each_slice(4) do |group|
+      range.each do |letter|
+         a << letter + " " + group.shift
+      end
+    end
+  
+    line_1 = "  1 2 3 4 \n"
+    result = line_1 + a.join(" \n") + " \n"
+  end
+
+  def render_assistant(option = false)
+    formatted = []
+    
+    @cells.each_slice(4) do |group|
+      unformatted = []
+      group.each do |_, cell|
+        unformatted << cell.render(option)
+      end
+      formatted << unformatted.join(" ")
+    end
+    formatted
   end
 end
