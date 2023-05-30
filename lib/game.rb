@@ -1,4 +1,13 @@
 class Game
+
+  def initialize
+    @board = Board.new
+    @cruiser = Ship.new("Cruiser", 3)
+    @submarine = Ship.new("Submarine", 2)
+    @player_1 = Player.new("Player_1")
+    @cpu_player = Player.new("CPU")
+  end
+
   def main_menu
    puts "Welcome to BATTLESHIP
     Enter p to play. Enter q to quit."
@@ -14,11 +23,6 @@ class Game
   end
 
   def start
-    @board = Board.new
-    @cruiser = Ship.new("Cruiser", 3)
-    @submarine = Ship.new("Submarine", 2)
-    @player_1 = Player.new("Player_1")
-    @cpu_player = Player.new("CPU")
 
     @player_1.add_ship(@cruiser)
     @player_1.add_ship(@submarine)
@@ -40,12 +44,27 @@ class Game
     @board.place(@submarine, @p1_submarine_formatted_coord)
 
     puts "Thanks I will now place my ships one moment"
+    self.npc_placement
+  end
 
-    @p2_submarine_coord = 
+  def npc_placement(ship)
+    @random_bank = @board.cells.keys
+    @randomized_bank = @random_bank
 
+    loop do
+      @random_selection = []
+      # require 'pry'; binding.pry
 
+      until @random_selection.length == ship.length do
+        @random_selection << @random_bank.sample
+      end
 
-
-    require 'pry'; binding.pry
+      if @board.valid_placement?(@cruiser, @random_selection)
+        @board.place(ship, @random_selection)
+        break
+      end
+      require 'pry'; binding.pry
+      # @random_selection
+    end
   end
 end
