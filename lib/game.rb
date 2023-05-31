@@ -47,24 +47,24 @@ class Game
     self.npc_placement
   end
 
-  def npc_placement(ship)
-    @random_bank = @board.cells.keys
-    @randomized_bank = @random_bank
+  # def npc_placement(ship)
+  #   @random_bank = @board.cells.keys
+  #   @randomized_bank = @random_bank
 
-    loop do
-      @random_selection = []
-      # require 'pry'; binding.pry
+  #   loop do
+  #     @random_selection = []
+  #     # require 'pry'; binding.pry
 
-      until @random_selection.length == ship.length do
-        @random_selection << @random_bank.sample
-      end
+  #     until @random_selection.length == ship.length do
+  #       @random_selection << @random_bank.sample
+  #     end
 
-      if @board.valid_placement?(@cruiser, @random_selection)
-        @board.place(ship, @random_selection)
-        break
-      end
-      require 'pry'; binding.pry
-      # @random_selection
-    end
-  end
+  #     if @board.valid_placement?(@cruiser, @random_selection)
+  #       @board.place(ship, @random_selection)
+  #       break
+  #     end
+  #     require 'pry'; binding.pry
+  #     # @random_selection
+  #   end
+  # end
 end
