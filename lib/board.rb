@@ -30,7 +30,7 @@ class Board
   def valid_placement?(ship, coordinates)
     ship.length == coordinates.count && consecutive_check(coordinates) == true &&
      diagonal_check(coordinates) == true && overlap_check(coordinates) == false
-    # require 'pry'; binding.pry
+    #
 
   end
 
@@ -112,12 +112,10 @@ class Board
     place(ship, placement)
   end
 
-  #This is a helper method for .randomly_place
   def random_cells(ship)
     options = cells.keys
-    placement = options.sample(ship.length) #sample size equal to ship size
+    placement = options.sample(ship.length)
     until valid_placement?(ship, placement)
-      # require 'pry'; binding.pry
       placement = options.sample(ship.length)
     end
     placement
