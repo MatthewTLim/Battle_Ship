@@ -24,17 +24,14 @@ class Board
   end
 
   def valid_coordinate(coordinate)
-   searched_cell = false
-   @cells.each do |cell|
-    if cell[0] == coordinate
-      searched_cell = true
-    end
-   end
-   searched_cell
+    @cells.has_key?(coordinate)
   end
 
   def valid_placement?(ship, coordinates)
-    ship.length == coordinates.count && consecutive_check(coordinates) == true && diagonal_check(coordinates) == false && overlap_check(coordinates) == false
+    ship.length == coordinates.count && consecutive_check(coordinates) == true &&
+     diagonal_check(coordinates) == true && overlap_check(coordinates) == false
+    #
+
   end
 
   def coordinate_formatter(coordinates)
@@ -49,27 +46,28 @@ class Board
   end
 
   def consecutive_check(coordinates)
-    coordinate_integer_comparison(coordinates) == true
+   (coordinate_integer_comparison(coordinates) || coordinate_formatter(coordinates).uniq.length == 1) &&
+   (coordinate_ordinal_comparison(coordinates) || ordinal_extractor(coordinates).uniq.length == 1)
+    # require 'pry'; binding.pry
   end
 
   def coordinate_integer_comparison(coordinates)
-    coordinate_formatter(coordinates).each_cons(coordinates.count - 1).all? { |first_coord, second_coord| second_coord == first_coord + 1}
+    coordinate_formatter(coordinates).each_cons(2).all? { |first_coord, second_coord| second_coord == first_coord + 1}
   end
 
   def coordinate_ordinal_comparison(coordinates)
-    ordinal_extractor(coordinates).each_cons(coordinates.count - 1).all? { |first_coord, second_coord| second_coord == first_coord + 1}
+    ordinal_extractor(coordinates).each_cons(2).all? { |first_coord, second_coord| second_coord == first_coord + 1}
   end
 
   def diagonal_check(coordinates)
-    coordinate_integer_comparison(coordinates) == true && coordinate_ordinal_comparison(coordinates) == true
+    coordinate_formatter(coordinates).uniq.length == 1 || ordinal_extractor(coordinates).uniq.length == 1
   end
 
   def overlap_check(coordinates)
     overlap = false
     coordinates.each do |coordinate|
-      @cells[coordinate].empty? == false
-      overlap = true
-      # break
+      overlap ||= !@cells[coordinate].ship.nil?
+      break if overlap
     end
     overlap
   end
@@ -91,14 +89,14 @@ class Board
          a << letter + " " + group.shift
       end
     end
-  
+
     line_1 = "  1 2 3 4 \n"
     result = line_1 + a.join(" \n") + " \n"
   end
 
   def render_assistant(option = false)
     formatted = []
-    
+
     @cells.each_slice(4) do |group|
       unformatted = []
       group.each do |_, cell|
@@ -107,5 +105,19 @@ class Board
       formatted << unformatted.join(" ")
     end
     formatted
+  end
+
+  def randomly_place(ship)
+    placement = random_cells(ship)
+    place(ship, placement)
+  end
+
+  def random_cells(ship)
+    options = cells.keys
+    placement = options.sample(ship.length)
+    until valid_placement?(ship, placement)
+      placement = options.sample(ship.length)
+    end
+    placement
   end
 end
