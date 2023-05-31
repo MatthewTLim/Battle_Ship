@@ -24,18 +24,12 @@ class Board
   end
 
   def valid_coordinate(coordinate)
-   searched_cell = false
-   @cells.each do |cell|
-    if cell[0] == coordinate
-      searched_cell = true
-    end
-   end
-   searched_cell
+    @cells.has_key?(coordinate)
   end
 
   def valid_placement?(ship, coordinates)
     ship.length == coordinates.count && consecutive_check(coordinates) == true &&
-     diagonal_check(coordinates) == false && overlap_check(coordinates) == false
+     diagonal_check(coordinates) == true && overlap_check(coordinates) == false
     # require 'pry'; binding.pry
 
   end
@@ -52,19 +46,21 @@ class Board
   end
 
   def consecutive_check(coordinates)
-    coordinate_integer_comparison(coordinates) == true || coordinate_ordinal_comparison(coordinates) == true
+   (coordinate_integer_comparison(coordinates) || coordinate_formatter(coordinates).uniq.length == 1) &&
+   (coordinate_ordinal_comparison(coordinates) || ordinal_extractor(coordinates).uniq.length == 1)
+    # require 'pry'; binding.pry
   end
 
   def coordinate_integer_comparison(coordinates)
-    coordinate_formatter(coordinates).each_cons(coordinates.count - 1).all? { |first_coord, second_coord| second_coord == first_coord + 1}
+    coordinate_formatter(coordinates).each_cons(2).all? { |first_coord, second_coord| second_coord == first_coord + 1}
   end
 
   def coordinate_ordinal_comparison(coordinates)
-    ordinal_extractor(coordinates).each_cons(coordinates.count - 1).all? { |first_coord, second_coord| second_coord == first_coord + 1}
+    ordinal_extractor(coordinates).each_cons(2).all? { |first_coord, second_coord| second_coord == first_coord + 1}
   end
 
   def diagonal_check(coordinates)
-    coordinate_integer_comparison(coordinates) == true && coordinate_ordinal_comparison(coordinates) == true
+    coordinate_formatter(coordinates).uniq.length == 1 || ordinal_extractor(coordinates).uniq.length == 1
   end
 
   def overlap_check(coordinates)
@@ -121,9 +117,9 @@ class Board
     options = cells.keys
     placement = options.sample(ship.length) #sample size equal to ship size
     until valid_placement?(ship, placement)
+      # require 'pry'; binding.pry
       placement = options.sample(ship.length)
     end
     placement
-    # require 'pry'; binding.pry
   end
 end
