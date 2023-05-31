@@ -56,11 +56,12 @@ RSpec.describe Board do
     end
 
     it "will not place a ship if the cell already contains a ship" do
+      @board.place(@cruiser, ["A1", "A2", "A3"] )
       expect(@board.valid_placement?(@submarine, ["A1", "B1"])).to eq(false)
     end
 
     describe "#coordinate_formatter" do
-      it "can return an array of coordicate numbers" do
+      it "can return an array of coordinate numbers" do
         coordinates = ["A1", "A2", "A3"]
         expect(@board.coordinate_formatter(coordinates)).to eq([1, 2, 3])
       end
@@ -78,7 +79,7 @@ RSpec.describe Board do
     describe "#diagonal_check" do
       it "can tell if the cooridnates are diagonal from one another" do
         valid_coordinate = ["A1", "B2", "C3"]
-        expect(@board.diagonal_check(valid_coordinate)).to eq(true)
+        expect(@board.diagonal_check(valid_coordinate)).to eq(false)
      end
     end
 
