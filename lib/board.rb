@@ -34,7 +34,10 @@ class Board
   end
 
   def valid_placement?(ship, coordinates)
-    ship.length == coordinates.count && consecutive_check(coordinates) == true && diagonal_check(coordinates) == false && overlap_check(coordinates) == false
+    ship.length == coordinates.count && consecutive_check(coordinates) == true &&
+     diagonal_check(coordinates) == false && overlap_check(coordinates) == false
+    # require 'pry'; binding.pry
+
   end
 
   def coordinate_formatter(coordinates)
@@ -49,7 +52,7 @@ class Board
   end
 
   def consecutive_check(coordinates)
-    coordinate_integer_comparison(coordinates) == true
+    coordinate_integer_comparison(coordinates) == true || coordinate_ordinal_comparison(coordinates) == true
   end
 
   def coordinate_integer_comparison(coordinates)
@@ -67,9 +70,8 @@ class Board
   def overlap_check(coordinates)
     overlap = false
     coordinates.each do |coordinate|
-      @cells[coordinate].empty? == false
-      overlap = true
-      # break
+      overlap ||= !@cells[coordinate].ship.nil?
+      break if overlap
     end
     overlap
   end
@@ -107,5 +109,21 @@ class Board
       formatted << unformatted.join(" ")
     end
     formatted
+  end
+
+  def randomly_place(ship)
+    placement = random_cells(ship)
+    place(ship, placement)
+  end
+
+  #This is a helper method for .randomly_place
+  def random_cells(ship)
+    options = cells.keys
+    placement = options.sample(ship.length) #sample size equal to ship size
+    until valid_placement?(ship, placement)
+      placement = options.sample(ship.length)
+    end
+    placement
+    # require 'pry'; binding.pry
   end
 end
