@@ -29,7 +29,7 @@ class Board
 
   def valid_placement?(ship, coordinates)
     ship.length == coordinates.count && consecutive_check(coordinates) == true &&
-     diagonal_check(coordinates) == true && overlap_check(coordinates) == false
+     diagonal_check(coordinates) == true && overlap_check(coordinates) == true
     #
 
   end
@@ -64,12 +64,13 @@ class Board
   end
 
   def overlap_check(coordinates)
-    overlap = false
-    coordinates.each do |coordinate|
-      overlap ||= !@cells[coordinate].ship.nil?
-      break if overlap
-    end
-    overlap
+    coordinates.all? { |coord| @cells[coord] && @cells[coord].empty? } 
+    # overlap = false
+    # coordinates.each do |coordinate|
+    #   overlap ||= !@cells[coordinate].ship.nil?
+    #   break if overlap
+    # end
+    # overlap
   end
 
   def place(ship, coordinates)
