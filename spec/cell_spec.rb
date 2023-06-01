@@ -1,5 +1,6 @@
 require './lib/ship'
 require './lib/cell'
+require 'colorize'
 
 RSpec.describe Cell do
   before do
@@ -55,20 +56,20 @@ RSpec.describe Cell do
     it "renders . if the cell has not been fired upon" do
       @cell_1.place_ship(@cruiser)
 
-      expect(@cell_1.render).to eq(".")
+      expect(@cell_1.render).to eq("🌊")
     end
 
     it "renders M if the cell has been fired upon and it does not contain a ship" do
       @cell_1.fire_upon
 
-      expect(@cell_1.render).to eq("M")
+      expect(@cell_1.render).to eq("💨")
     end
 
     it "renders S if the cell has not been fired upon and contains a ship" do
       @cell_2.place_ship(@cruiser)
 
-      expect(@cell_2.render).to eq(".")
-      expect(@cell_2.render(true)).to eq("S")
+      expect(@cell_2.render).to eq("🌊")
+      expect(@cell_2.render(true)).to eq("🛥 ")
     end
 
     it "renders H if the cell has been fired upon and it contains a ship (the shot was a hit)." do
@@ -76,7 +77,7 @@ RSpec.describe Cell do
 
       @cell_2.fire_upon
 
-      expect(@cell_2.render).to eq("H")
+      expect(@cell_2.render).to eq("💥")
     end
 
     it "renders “X” if the cell has been fired upon and its ship has been sunk. " do
@@ -86,7 +87,7 @@ RSpec.describe Cell do
       @cell_2.fire_upon
       @cell_2.fire_upon
 
-      expect(@cell_2.render).to eq("X")
+      expect(@cell_2.render).to eq("\u{1F6DF} ")
     end
   end
 end

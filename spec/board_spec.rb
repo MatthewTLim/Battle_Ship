@@ -1,6 +1,8 @@
 require './lib/ship'
 require './lib/cell'
 require './lib/board'
+require 'colorize'
+
 
 RSpec.describe Board do
   before do
@@ -117,13 +119,13 @@ RSpec.describe Board do
   describe "#render" do
     it "can render a String representation of itself to display to the user all of its cells in a formatted grid" do
 
-      expect(@board.render).to eq("  1  2  3  4  \nA 🌊 🌊 🌊 🌊 \nB 🌊 🌊 🌊 🌊 \nC 🌊 🌊 🌊 🌊 \nD 🌊 🌊 🌊 🌊 \n")
+      expect(@board.render).to eq("\e[0;31;49m  1  2  3  4  \n\e[0m\e[0;31;49mA 🌊 🌊 🌊 🌊 \nB 🌊 🌊 🌊 🌊 \nC 🌊 🌊 🌊 🌊 \nD 🌊 🌊 🌊 🌊\e[0m \n")
     end
 
     it "can render ships on the board when option is true" do
       @board.place(@cruiser, ["A1", "A2", "A3"])
 
-      expect(@board.render(true)).to eq("  1  2  3  4  \nA 🛥  🛥  🛥  🌊 \nB 🌊 🌊 🌊 🌊 \nC 🌊 🌊 🌊 🌊 \nD 🌊 🌊 🌊 🌊 \n")
+      expect(@board.render(true)).to eq("\e[0;31;49m  1  2  3  4  \n\e[0m\e[0;31;49mA 🛥  🛥  🛥  🌊 \nB 🌊 🌊 🌊 🌊 \nC 🌊 🌊 🌊 🌊 \nD 🌊 🌊 🌊 🌊\e[0m \n")
     end
   end
 
