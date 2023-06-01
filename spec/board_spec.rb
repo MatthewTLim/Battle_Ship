@@ -39,14 +39,12 @@ RSpec.describe Board do
       expect(@board.valid_placement?(@cruiser, ["A1", "A2"])).to eq(false)
       expect(@board.valid_placement?(@cruiser, ["A1", "A2", "A3"])).to eq(true)
       expect(@board.valid_placement?(@submarine, ["A1", "A3", "A4"])).to eq(false)
-      # Add fringe tests here later
     end
 
     it "can make sure the coordinates are consecutive" do
       expect(@board.valid_placement?(@cruiser, ["A1", "A2", "A4"])).to eq(false)
       expect(@board.valid_placement?(@cruiser, ["A1", "A2", "A3"])).to eq(true)
       expect(@board.valid_placement?(@submarine, ["A1", "C1"])).to eq(false)
-      # Add fringe tests here later
     end
 
     it "can make sure a ship will not be placed diagonally" do
@@ -98,8 +96,6 @@ RSpec.describe Board do
 
         @board.place(@cruiser, overlapped_coordinates)
 
-        # expect(@board.valid_placement?(@submarine, ["A1", "A2"])).to eq(false)
-        # expect(@board.valid_placement?(@submarine, ["B1", "B2"])).to eq(true)
         expect(@board.overlap_check(overlapped_coordinates)).to eq(false)
         expect(@board.overlap_check(test_coordinates)).to eq(false)
         expect(@board.overlap_check(good_coords)).to eq(true)

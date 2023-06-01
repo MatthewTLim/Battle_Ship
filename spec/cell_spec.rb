@@ -37,7 +37,6 @@ RSpec.describe Cell do
   describe "#fired_upon?" do
     it "can check if it has been fired at" do
       @cell_1.place_ship(@cruiser)
-      # require 'pry'; binding.pry
       expect(@cell_1.fired_upon?).to eq(false)
     end
   end

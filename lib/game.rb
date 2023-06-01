@@ -26,11 +26,6 @@ class Game
 
   def start
 
-    # @player_1.add_ship(@cruiser)
-    # @player_1.add_ship(@submarine)
-    # @cpu_player.add_ship(@cruiser)
-    # @cpu_player.add_ship(@submarine)
-
     puts "Please enter the coordinates to place your first ship
     your ship is #{@cruiser.length} spaces long."
 
@@ -38,7 +33,6 @@ class Game
     loop do
       @p1_cruiser_coord = gets.chomp
       @p1_cruiser_formatted_coord = @p1_cruiser_coord.split
-        # require 'pry'; binding.pry
       if @board.valid_placement?(@cruiser, @p1_cruiser_formatted_coord)
         break
       else
@@ -72,7 +66,6 @@ class Game
     puts @board.render(true)
 
     # Find a way to center the board
-    #until (@cruiser.sunk? == true && @submarine.sunk? ==    true) || (@npc_cruiser.sunk? == true && @npc_submarine == true)
     loop do
       puts "Enter the coordinate for your shot:"
       loop do
@@ -104,16 +97,11 @@ class Game
         @shot_bank = @board.cells.keys.sample
         if @board.cells[@shot_bank].fired_upon? == true
           @shot_bank = @board.cells.keys.sample
-          # puts "You've already fired upon this coordinate. Please pick a new coordinate."
         elsif @board.valid_coordinate(@shot_bank)
           break
         end
-        # else  
-        #   # puts "Invalid coordinate, please try again."
-        # end
       end
 
-      # @shot_bank = @board.cells.keys.sample
       @board.cells[@shot_bank].fire_upon
       if @cruiser.sunk? == true && @submarine.sunk? == true 
         puts "I won!"
