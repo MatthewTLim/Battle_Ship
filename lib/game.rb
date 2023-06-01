@@ -1,8 +1,9 @@
 class Game
 
   def main_menu
-   puts "Welcome to BATTLESHIP
-    Enter p to play. Enter q to quit."
+    a = Artii::Base.new :font => 'slant'
+    puts a.asciify('Welcome to Battleship!')
+    puts "Enter p to play. Enter q to quit."
     input = gets.chomp
     if input == "p" || input =="P"
       set_up
@@ -91,14 +92,22 @@ class Game
         puts @npc_board.render
         puts "==============PLAYER BOARD=============="
         puts @board.render(true)
-        puts "You won!"
+        b = Artii::Base.new :font => 'slant'
+        puts b.asciify('You won!')
+        # puts "You won!"
         break
       elsif @npc_board.cells[@user_shot].ship != nil && @npc_board.cells[@user_shot].ship.sunk? == true 
+        puts " "
         puts "Your shot sunk my ship!"
+        puts " "
       elsif @npc_board.cells[@user_shot].empty?
+        puts " "
         puts "Your shot on #{@user_shot} was a miss!"
+        puts " "
       else
+        puts " "
         puts "Your shot on #{@user_shot} was a hit!"
+        puts " "
       end
       puts "=============COMPUTER BOARD============="
       puts @npc_board.render
@@ -115,14 +124,22 @@ class Game
       @board.cells[@shot_bank].fire_upon
       if @cruiser.sunk? == true && @submarine.sunk? == true 
         puts @board.render
-        puts "I won!"
+        c = Artii::Base.new :font => 'slant'
+        puts c.asciify('I won!')
+        # puts "I won!"
         break
       elsif @board.cells[@shot_bank].ship != nil && @board.cells[@shot_bank].ship.sunk? == true 
+        puts " "
         puts "I sunk your ship!"
+        puts " "
       elsif @board.cells[@shot_bank].empty?
+        puts " "
         puts "My shot on #{@shot_bank} was a miss!"
+        puts " "
       else 
+        puts " "
         puts "My shot on #{@shot_bank} was a hit!"
+        puts " "
       end
         puts "==============PLAYER BOARD=============="
         puts @board.render
