@@ -16,12 +16,11 @@ class Game
     Enter p to play. Enter q to quit."
     input = gets.chomp
     if input == "p" || input =="P"
-     self.start
-    elsif
-    input == "q" || input == "Q"
-    "EXIT"
+      start
+    elsif input == "q" || input == "Q"
+      puts "EXIT"
     else
-      nil
+      main_menu
     end
   end
 
@@ -65,12 +64,15 @@ class Game
     puts "Thanks I will now place my ships one moment"
     @npc_board.randomly_place(@npc_cruiser)
     @npc_board.randomly_place(@npc_submarine)
+
     puts "I have placed my ships, let the battle begin!"
     puts "=============COMPUTER BOARD============="
-    puts @npc_board.render
+    puts @npc_board.render(true)
     puts "==============PLAYER BOARD=============="
     puts @board.render(true)
+
     # Find a way to center the board
+    
     puts "Enter the coordinate for your shot:"
     loop do
       @user_shot = gets.chomp
@@ -82,5 +84,28 @@ class Game
     end
     # require 'pry'; binding.pry
     @npc_board.cells[@user_shot].fire_upon
+    # require 'pry'; binding.pry
+    if @npc_board.cells[@user_shot].empty?
+      puts "Your shot on #{@user_shot} was a miss!"
+      # puts "=============COMPUTER BOARD============="
+    elsif
+      puts "Your shot on #{@user_shot} was a hit!"
+      # puts @npc_board.render
+    end
+    # require 'pry'; binding.pry
+    
+    puts "=============COMPUTER BOARD============="
+    puts @npc_board.render
+    @shot_bank = @board.cells.keys.sample
+    @board.cells[@shot_bank].fire_upon
+      if @board.cells[@shot_bank].empty?
+        puts "My shot on #{@shot_bank} was a miss!"
+        puts "==============PLAYER BOARD=============="
+        puts @board.render
+      else 
+        puts "My shot on #{@shot_bank} was a hit!"
+        puts "==============PLAYER BOARD=============="
+        puts @board.render
+      end
   end
 end
