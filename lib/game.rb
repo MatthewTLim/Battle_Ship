@@ -72,40 +72,62 @@ class Game
     puts @board.render(true)
 
     # Find a way to center the board
-    
-    puts "Enter the coordinate for your shot:"
+    #until (@cruiser.sunk? == true && @submarine.sunk? ==    true) || (@npc_cruiser.sunk? == true && @npc_submarine == true)
     loop do
-      @user_shot = gets.chomp
-      if @npc_board.valid_coordinate(@user_shot)
-        break
-      else  
-        puts "Invalid coordinate, please try again."
+      puts "Enter the coordinate for your shot:"
+      loop do
+        @user_shot = gets.chomp
+        if @npc_board.cells[@user_shot].fired_upon? == true
+          puts "You've already fired upon this coordinate. Please pick a new coordinate."
+        elsif @npc_board.valid_coordinate(@user_shot)
+          break
+        else  
+          puts "Invalid coordinate, please try again."
+        end
       end
-    end
-    # require 'pry'; binding.pry
-    @npc_board.cells[@user_shot].fire_upon
-    # require 'pry'; binding.pry
-    if @npc_board.cells[@user_shot].empty?
-      puts "Your shot on #{@user_shot} was a miss!"
-      # puts "=============COMPUTER BOARD============="
-    elsif
-      puts "Your shot on #{@user_shot} was a hit!"
-      # puts @npc_board.render
-    end
-    # require 'pry'; binding.pry
-    
-    puts "=============COMPUTER BOARD============="
-    puts @npc_board.render
-    @shot_bank = @board.cells.keys.sample
-    @board.cells[@shot_bank].fire_upon
-      if @board.cells[@shot_bank].empty?
+
+      @npc_board.cells[@user_shot].fire_upon
+      if @npc_cruiser.sunk? == true && @npc_submarine.sunk? == true 
+        puts "You won!"
+        break
+      elsif @npc_board.cells[@user_shot].ship != nil && @npc_board.cells[@user_shot].ship.sunk? == true 
+        puts "Your shot sunk my ship!"
+      elsif @npc_board.cells[@user_shot].empty?
+        puts "Your shot on #{@user_shot} was a miss!"
+      else
+        puts "Your shot on #{@user_shot} was a hit!"
+      end
+      puts "=============COMPUTER BOARD============="
+      puts @npc_board.render
+
+      loop do
+        @shot_bank = @board.cells.keys.sample
+        if @board.cells[@shot_bank].fired_upon? == true
+          @shot_bank = @board.cells.keys.sample
+          # puts "You've already fired upon this coordinate. Please pick a new coordinate."
+        elsif @board.valid_coordinate(@shot_bank)
+          break
+        end
+        # else  
+        #   # puts "Invalid coordinate, please try again."
+        # end
+      end
+
+      # @shot_bank = @board.cells.keys.sample
+      @board.cells[@shot_bank].fire_upon
+      if @cruiser.sunk? == true && @submarine.sunk? == true 
+        puts "I won!"
+        break
+      elsif @board.cells[@shot_bank].ship != nil && @board.cells[@shot_bank].ship.sunk? == true 
+        puts "I sunk your ship!"
+      elsif @board.cells[@shot_bank].empty?
         puts "My shot on #{@shot_bank} was a miss!"
-        puts "==============PLAYER BOARD=============="
-        puts @board.render
       else 
         puts "My shot on #{@shot_bank} was a hit!"
+      end
         puts "==============PLAYER BOARD=============="
         puts @board.render
-      end
+    end
   end
 end
+
