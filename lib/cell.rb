@@ -24,6 +24,8 @@ class Cell
     if empty? == false
       @ship.hit
       @fired_at = true
+    else
+      @fired_at = true
     end
   end
 
