@@ -1,6 +1,20 @@
 class Game
 
-  def initialize
+  def main_menu
+   puts "Welcome to BATTLESHIP
+    Enter p to play. Enter q to quit."
+    input = gets.chomp
+    if input == "p" || input =="P"
+      set_up
+      start
+    elsif input == "q" || input == "Q"
+      puts "EXIT"
+    else
+      main_menu
+    end
+  end
+
+  def set_up
     @board = Board.new
     @npc_board = Board.new
     @cruiser = Ship.new("Cruiser", 3)
@@ -11,27 +25,16 @@ class Game
     @cpu_player = Player.new("CPU")
   end
 
-  def main_menu
-   puts "Welcome to BATTLESHIP
-    Enter p to play. Enter q to quit."
-    input = gets.chomp
-    if input == "p" || input =="P"
-      start
-    elsif input == "q" || input == "Q"
-      puts "EXIT"
-    else
-      main_menu
-    end
-  end
-
   def start
 
     puts "Please enter the coordinates to place your first ship
     your ship is #{@cruiser.length} spaces long."
+    puts "==============PLAYER BOARD=============="
+    puts @board.render(true)
 
-    # Add function to remove commas and account for lower case letters
     loop do
-      @p1_cruiser_coord = gets.chomp
+      @p1_cruiser_coord_unformatted = gets.chomp
+      @p1_cruiser_coord = @p1_cruiser_coord_unformatted.upcase.delete('^a-zA-Z0-9 ')
       @p1_cruiser_formatted_coord = @p1_cruiser_coord.split
       if @board.valid_placement?(@cruiser, @p1_cruiser_formatted_coord)
         break
@@ -43,9 +46,12 @@ class Game
 
     puts "Please enter the coordinates to place your second ship
     your ship is #{@submarine.length} spaces long."
+    puts "==============PLAYER BOARD=============="
+    puts @board.render(true)
 
     loop do
-      @p1_submarine_coord = gets.chomp
+      @p1_submarine_coord_unformatted = gets.chomp
+      @p1_submarine_coord = @p1_submarine_coord_unformatted.upcase.delete('^a-zA-Z0-9 ')
       @p1_submarine_formatted_coord = @p1_submarine_coord.split
       if @board.valid_placement?(@submarine, @p1_submarine_formatted_coord)
         break
@@ -69,7 +75,8 @@ class Game
     loop do
       puts "Enter the coordinate for your shot:"
       loop do
-        @user_shot = gets.chomp
+        @user_shot_unformatted = gets.chomp
+        @user_shot = @user_shot_unformatted.upcase.delete('^a-zA-Z0-9')
         if @npc_board.cells[@user_shot].fired_upon? == true
           puts "You've already fired upon this coordinate. Please pick a new coordinate."
         elsif @npc_board.valid_coordinate(@user_shot)
