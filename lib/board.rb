@@ -82,7 +82,7 @@ class Board
       end
     end
 
-    line_1 = "  1 2 3 4 \n"
+    line_1 = "  1  2  3  4  \n"
     result = line_1 + a.join(" \n") + " \n"
   end
 

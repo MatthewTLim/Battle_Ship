@@ -9,3 +9,4 @@ require './lib/player'
 loop do
     @game.main_menu
 end
+🛥⚓️💥💨 🛟

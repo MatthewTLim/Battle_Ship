@@ -46,8 +46,7 @@ class Game
 
     puts "Please enter the coordinates to place your second ship
     your ship is #{@submarine.length} spaces long."
-    puts "==============PLAYER BOARD=============="
-    puts @board.render(true)
+    
 
     loop do
       @p1_submarine_coord_unformatted = gets.chomp
@@ -61,7 +60,7 @@ class Game
     end
     @board.place(@submarine, @p1_submarine_formatted_coord)
 
-    puts "Thanks I will now place my ships one moment"
+    puts "Thanks I will now place my ships, one moment please."
     @npc_board.randomly_place(@npc_cruiser)
     @npc_board.randomly_place(@npc_submarine)
 
@@ -88,6 +87,10 @@ class Game
 
       @npc_board.cells[@user_shot].fire_upon
       if @npc_cruiser.sunk? == true && @npc_submarine.sunk? == true 
+        puts "=============COMPUTER BOARD============="
+        puts @npc_board.render
+        puts "==============PLAYER BOARD=============="
+        puts @board.render(true)
         puts "You won!"
         break
       elsif @npc_board.cells[@user_shot].ship != nil && @npc_board.cells[@user_shot].ship.sunk? == true 
@@ -111,6 +114,7 @@ class Game
 
       @board.cells[@shot_bank].fire_upon
       if @cruiser.sunk? == true && @submarine.sunk? == true 
+        puts @board.render
         puts "I won!"
         break
       elsif @board.cells[@shot_bank].ship != nil && @board.cells[@shot_bank].ship.sunk? == true 
