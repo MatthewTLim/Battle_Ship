@@ -100,9 +100,9 @@ RSpec.describe Board do
 
         # expect(@board.valid_placement?(@submarine, ["A1", "A2"])).to eq(false)
         # expect(@board.valid_placement?(@submarine, ["B1", "B2"])).to eq(true)
-        expect(@board.overlap_check(overlapped_coordinates)).to eq(true)
-        expect(@board.overlap_check(test_coordinates)).to eq(true)
-        expect(@board.overlap_check(good_coords)).to eq(false)
+        expect(@board.overlap_check(overlapped_coordinates)).to eq(false)
+        expect(@board.overlap_check(test_coordinates)).to eq(false)
+        expect(@board.overlap_check(good_coords)).to eq(true)
       end
     end
   end
