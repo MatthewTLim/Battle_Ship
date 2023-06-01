@@ -7,3 +7,5 @@ require './lib/player'
 @game = Game.new
 
 @game.main_menu
+
+@game.main_menu
