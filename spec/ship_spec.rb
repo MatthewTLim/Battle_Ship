@@ -17,11 +17,11 @@ RSpec.describe Ship do
   end
 
   describe "#sunk?" do
-    xit "can tell if the ship is sunk or not" do
+    it "can tell if the ship is sunk or not" do
       expect(@cruiser.sunk?).to eq(false)
     end
 
-    xit "can be sunk after its health is reduced to 0" do
+    it "can be sunk after its health is reduced to 0" do
       @cruiser.hit
       @cruiser.hit
       @cruiser.hit
@@ -31,12 +31,9 @@ RSpec.describe Ship do
   end
 
   describe "#hit" do
-    xit "can hit the ship" do
+    it "can hit the ship" do
       @cruiser.hit
       expect(@cruiser.health).to eq(2)
     end
-
-
-    it "can sink the "
   end
 end

@@ -16,7 +16,6 @@ class Cell
   end
 
   def fired_upon?
-    # !(@ship.nil? || @ship.health == @ship.length) || @fired_at != false
     @fired_at 
   end
 
