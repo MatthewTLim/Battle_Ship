@@ -6,6 +6,7 @@ require './lib/player'
 
 @game = Game.new
 
-@game.main_menu
-
-@game.main_menu
+loop do
+    @game.main_menu
+end
+🛥⚓️💥💨 🛟

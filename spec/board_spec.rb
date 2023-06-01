@@ -117,19 +117,19 @@ RSpec.describe Board do
   describe "#render" do
     it "can render a String representation of itself to display to the user all of its cells in a formatted grid" do
 
-      expect(@board.render).to eq("  1 2 3 4 \nA . . . . \nB . . . . \nC . . . . \nD . . . . \n")
+      expect(@board.render).to eq("  1  2  3  4  \nA 🌊 🌊 🌊 🌊 \nB 🌊 🌊 🌊 🌊 \nC 🌊 🌊 🌊 🌊 \nD 🌊 🌊 🌊 🌊 \n")
     end
 
     it "can render ships on the board when option is true" do
       @board.place(@cruiser, ["A1", "A2", "A3"])
 
-      expect(@board.render(true)).to eq("  1 2 3 4 \nA S S S . \nB . . . . \nC . . . . \nD . . . . \n")
+      expect(@board.render(true)).to eq("  1  2  3  4  \nA 🛥  🛥  🛥  🌊 \nB 🌊 🌊 🌊 🌊 \nC 🌊 🌊 🌊 🌊 \nD 🌊 🌊 🌊 🌊 \n")
     end
   end
 
   describe "#render_assistant" do
     it "can add renderable spaces to board i.e.(., M, S, H, X)" do
-      expect(@board.render_assistant).to eq([". . . .", ". . . .", ". . . .", ". . . ."])
+      expect(@board.render_assistant).to eq(["🌊 🌊 🌊 🌊", "🌊 🌊 🌊 🌊", "🌊 🌊 🌊 🌊", "🌊 🌊 🌊 🌊"])
     end
   end
 

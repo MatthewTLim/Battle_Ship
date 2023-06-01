@@ -30,15 +30,15 @@ class Cell
 
   def render(option = false)
     if @fired_at == true && @ship == nil
-      "M"
+      "💨" # Miss
     elsif empty? == false && fired_upon? == false && option == true
-      "S"
+      "🛥 " #ship
     elsif fired_upon? == true && @ship.sunk? == true
-      "X"
+      "🛟 " #sunk
     elsif fired_upon? == true && @ship.health != @ship.length
-      "H"
+      "💥" #hit
     else
-      "."
+      "🌊" #default board
     end
   end
 end

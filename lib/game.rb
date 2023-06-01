@@ -1,6 +1,20 @@
 class Game
 
-  def initialize
+  def main_menu
+   puts "Welcome to BATTLESHIP
+    Enter p to play. Enter q to quit."
+    input = gets.chomp
+    if input == "p" || input =="P"
+      set_up
+      start
+    elsif input == "q" || input == "Q"
+      puts "EXIT"
+    else
+      main_menu
+    end
+  end
+
+  def set_up
     @board = Board.new
     @npc_board = Board.new
     @cruiser = Ship.new("Cruiser", 3)
@@ -11,27 +25,16 @@ class Game
     @cpu_player = Player.new("CPU")
   end
 
-  def main_menu
-   puts "Welcome to BATTLESHIP
-    Enter p to play. Enter q to quit."
-    input = gets.chomp
-    if input == "p" || input =="P"
-      start
-    elsif input == "q" || input == "Q"
-      puts "EXIT"
-    else
-      main_menu
-    end
-  end
-
   def start
 
     puts "Please enter the coordinates to place your first ship
     your ship is #{@cruiser.length} spaces long."
+    puts "==============PLAYER BOARD=============="
+    puts @board.render(true)
 
-    # Add function to remove commas and account for lower case letters
     loop do
-      @p1_cruiser_coord = gets.chomp
+      @p1_cruiser_coord_unformatted = gets.chomp
+      @p1_cruiser_coord = @p1_cruiser_coord_unformatted.upcase.delete('^a-zA-Z0-9 ')
       @p1_cruiser_formatted_coord = @p1_cruiser_coord.split
       if @board.valid_placement?(@cruiser, @p1_cruiser_formatted_coord)
         break
@@ -43,9 +46,11 @@ class Game
 
     puts "Please enter the coordinates to place your second ship
     your ship is #{@submarine.length} spaces long."
+    
 
     loop do
-      @p1_submarine_coord = gets.chomp
+      @p1_submarine_coord_unformatted = gets.chomp
+      @p1_submarine_coord = @p1_submarine_coord_unformatted.upcase.delete('^a-zA-Z0-9 ')
       @p1_submarine_formatted_coord = @p1_submarine_coord.split
       if @board.valid_placement?(@submarine, @p1_submarine_formatted_coord)
         break
@@ -55,7 +60,7 @@ class Game
     end
     @board.place(@submarine, @p1_submarine_formatted_coord)
 
-    puts "Thanks I will now place my ships one moment"
+    puts "Thanks I will now place my ships, one moment please."
     @npc_board.randomly_place(@npc_cruiser)
     @npc_board.randomly_place(@npc_submarine)
 
@@ -69,7 +74,8 @@ class Game
     loop do
       puts "Enter the coordinate for your shot:"
       loop do
-        @user_shot = gets.chomp
+        @user_shot_unformatted = gets.chomp
+        @user_shot = @user_shot_unformatted.upcase.delete('^a-zA-Z0-9')
         if @npc_board.cells[@user_shot].fired_upon? == true
           puts "You've already fired upon this coordinate. Please pick a new coordinate."
         elsif @npc_board.valid_coordinate(@user_shot)
@@ -81,6 +87,10 @@ class Game
 
       @npc_board.cells[@user_shot].fire_upon
       if @npc_cruiser.sunk? == true && @npc_submarine.sunk? == true 
+        puts "=============COMPUTER BOARD============="
+        puts @npc_board.render
+        puts "==============PLAYER BOARD=============="
+        puts @board.render(true)
         puts "You won!"
         break
       elsif @npc_board.cells[@user_shot].ship != nil && @npc_board.cells[@user_shot].ship.sunk? == true 
@@ -104,6 +114,7 @@ class Game
 
       @board.cells[@shot_bank].fire_upon
       if @cruiser.sunk? == true && @submarine.sunk? == true 
+        puts @board.render
         puts "I won!"
         break
       elsif @board.cells[@shot_bank].ship != nil && @board.cells[@shot_bank].ship.sunk? == true 
