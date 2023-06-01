@@ -66,5 +66,21 @@ class Game
     @npc_board.randomly_place(@npc_cruiser)
     @npc_board.randomly_place(@npc_submarine)
     puts "I have placed my ships, let the battle begin!"
+    puts "=============COMPUTER BOARD============="
+    puts @npc_board.render
+    puts "==============PLAYER BOARD=============="
+    puts @board.render(true)
+    # Find a way to center the board
+    puts "Enter the coordinate for your shot:"
+    loop do
+      @user_shot = gets.chomp
+      if @npc_board.valid_coordinate(@user_shot)
+        break
+      else  
+        puts "Invalid coordinate, please try again."
+      end
+    end
+    # require 'pry'; binding.pry
+    @npc_board.cells[@user_shot].fire_upon
   end
 end
