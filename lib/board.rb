@@ -82,8 +82,8 @@ class Board
       end
     end
 
-    line_1 = "  1  2  3  4  \n"
-    result = line_1 + a.join(" \n") + " \n"
+    line_1 = "  1  2  3  4  \n".colorize(:red)
+    result = line_1 + a.join(" \n").colorize(:red) + " \n"
   end
 
   def render_assistant(option = false)
