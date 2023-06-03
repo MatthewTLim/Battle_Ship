@@ -22,8 +22,6 @@ class Game
     @submarine = Ship.new("Submarine", 2)
     @npc_cruiser = Ship.new("Cruiser", 3)
     @npc_submarine = Ship.new("Submarine", 2)
-    @player_1 = Player.new("Player_1")
-    @cpu_player = Player.new("CPU")
   end
 
   def start
@@ -47,7 +45,7 @@ class Game
 
     puts "Please enter the coordinates to place your second ship
     your ship is #{@submarine.length} spaces long.".colorize(:green)
-    
+
 
     loop do
       @p1_submarine_coord_unformatted = gets.chomp
@@ -55,7 +53,7 @@ class Game
       @p1_submarine_formatted_coord = @p1_submarine_coord.split
       if @board.valid_placement?(@submarine, @p1_submarine_formatted_coord)
         break
-      else 
+      else
         puts "Invalid placement, please try again.".colorize(:green)
       end
     end
@@ -67,7 +65,7 @@ class Game
 
     puts "I have placed my ships, let the battle begin!".colorize(:green)
     puts "=============COMPUTER BOARD=============".colorize(:green)
-    puts @npc_board.render(true)
+    puts @npc_board.render
     puts "==============PLAYER BOARD==============".colorize(:green)
     puts @board.render(true)
 
@@ -81,13 +79,13 @@ class Game
           puts "You've already fired upon this coordinate. Please pick a new coordinate.".colorize(:green)
         elsif @npc_board.valid_coordinate(@user_shot)
           break
-        else  
+        else
           puts "Invalid coordinate, please try again.".colorize(:green)
         end
       end
 
       @npc_board.cells[@user_shot].fire_upon
-      if @npc_cruiser.sunk? == true && @npc_submarine.sunk? == true 
+      if @npc_cruiser.sunk? == true && @npc_submarine.sunk? == true
         puts "=============COMPUTER BOARD=============".colorize(:green)
         puts @npc_board.render
         puts "==============PLAYER BOARD==============".colorize(:green)
@@ -96,7 +94,7 @@ class Game
         puts b.asciify('You won!').colorize(:red)
         # puts "You won!"
         break
-      elsif @npc_board.cells[@user_shot].ship != nil && @npc_board.cells[@user_shot].ship.sunk? == true 
+      elsif @npc_board.cells[@user_shot].ship != nil && @npc_board.cells[@user_shot].ship.sunk? == true
         puts " "
         puts "Your shot sunk my ship!".colorize(:green)
         puts " "
@@ -122,13 +120,13 @@ class Game
       end
 
       @board.cells[@shot_bank].fire_upon
-      if @cruiser.sunk? == true && @submarine.sunk? == true 
-        puts @board.render
+      if @cruiser.sunk? == true && @submarine.sunk? == true
+        puts @board.render(true)
         c = Artii::Base.new :font => 'slant'
         puts c.asciify('I won!').colorize(:red)
         # puts "I won!"
         break
-      elsif @board.cells[@shot_bank].ship != nil && @board.cells[@shot_bank].ship.sunk? == true 
+      elsif @board.cells[@shot_bank].ship != nil && @board.cells[@shot_bank].ship.sunk? == true
         puts " "
         puts "I sunk your ship!".colorize(:green)
         puts " "
@@ -136,13 +134,13 @@ class Game
         puts " "
         puts "My shot on #{@shot_bank} was a miss!".colorize(:green)
         puts " "
-      else 
+      else
         puts " "
         puts "My shot on #{@shot_bank} was a hit!".colorize(:green)
         puts " "
       end
         puts "==============PLAYER BOARD==============".colorize(:green)
-        puts @board.render
+        puts @board.render(true)
     end
   end
 end
